@@ -1,0 +1,17 @@
+# MATLAB
+*.asv
+*.m~
+*.autosave
+slprj/
+codegen/
+octave-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+
+# Machine-specific config (see local_config_template.m)
+local_config.m
