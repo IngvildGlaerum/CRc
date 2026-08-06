@@ -21,11 +21,17 @@ CRc/
 ├── KL_distance_plots.mlx / .m      # day-pooled cumulative KL plots + per-day LMM stats
 ├── KL_distance_reward_cells.mlx / .m
 ├── RewardRasters.mlx / .m
+├── BehaviorOnly/                  # Radial Arm Maze / T-maze / habituation — separate data root, see "Data paths"
+│   ├── HabituationRAM.mlx
+│   ├── Radial_Arm.mlx
+│   └── Tmaze.mlx                  # .mat data files are gitignored, not stored in this repo
 ├── CRc.prj                        # MATLAB Project — open this to auto-set the path
-├── local_config_template.m        # copy to local_config.m and set your data path (see "Data paths")
+├── local_config_template.m        # copy to local_config.m and set your data paths (see "Data paths")
 ├── local_config.m                 # machine-specific, gitignored — not in the repo history
 ├── Functions/
-│   ├── get_data_root.m             # reads local_config.m; every script calls this for its data root
+│   ├── get_data_root.m             # reads local_config.m; main Analysis root
+│   ├── get_behavior_root.m         # reads local_config.m; BehaviorOnly data root
+│   ├── read_local_config.m         # shared helper behind the two functions above
 │   ├── SE.m
 │   ├── save_figure.m
 │   ├── linspecer.m
@@ -51,25 +57,33 @@ CRc/
 
 1. Clone this repo.
 2. Open `CRc.prj` in MATLAB (double-click it, or `openProject('path/to/CRc')`) — this automatically adds the repo root and `Functions/` to your MATLAB path for as long as the project is open, and removes them again when you close it, so it doesn't leak into other projects on your machine.
-3. Copy `local_config_template.m` to `local_config.m` (same folder) and set the one path inside it to your local Analysis folder — see "Data paths" below.
+3. Copy `local_config_template.m` to `local_config.m` (same folder) and set the two paths inside it — see "Data paths" below.
 
 ## Data paths
 
-Every script gets its data root by calling `get_data_root()` instead of hardcoding a path. That function reads `local_config.m`, a single machine-specific file that is gitignored — so it's never overwritten by a pull and never pushed to GitHub. To set up a new machine or clone:
+There are two separate data roots, since the main Ephys analysis data and the behavior-only data live in different folders:
+
+- **`get_data_root()`** — the main Analysis root, used by every script in the repo root.
+- **`get_behavior_root()`** — the Radial Arm Maze / T-maze / habituation data root, used by the scripts in `BehaviorOnly/`. Kept separate deliberately: these are large raw `.mat` files (tens of MB) that stay off GitHub entirely (gitignored — see `BehaviorOnly/*.mat` in `.gitignore`), unlike the main Analysis data which at least has its folder structure documented here.
+
+Both functions read from the same `local_config.m`, a single machine-specific file that is gitignored — never overwritten by a pull, never pushed to GitHub. To set up a new machine or clone:
 
 1. Copy `local_config_template.m` → `local_config.m` (repo root).
-2. Edit the one line inside to point at your local Analysis folder, e.g.:
+2. Edit the two paths inside, e.g.:
    ```matlab
-   root = '/Volumes/quattrocolo/crhip/ingvild/Analysis';
+   paths.analysis = '/Volumes/quattrocolo/crhip/ingvild/Analysis';
+   paths.behavior = '/Volumes/quattrocolo/crhip/ingvild/Radial Arm Maze';
    ```
 
-Everything is expected to live under that single root:
+Everything under `get_data_root()` is expected to follow this structure:
 
 - `<root>/Metadata.xlsx` and `<root>/<animal_ID>/<date>/<session>/data/Processed/*.mat` — raw/per-session data (`postprocessed.mat`, `behavior.mat`, `Position_tuning.mat`, etc.)
 - `<root>/CompiledData/` — the compiled `.mat` files scripts load/save between each other (`CompiledSpatialStats.mat`, `KLdistance.mat`, `Decoding.mat`, `All_1D_spatial_maps.mat`, etc.)
 - `<root>/Figures/Ingvild/Ephys/...` — where every script saves its figures, via `save_figure(...)`
 
-If a script needs a path other than the root itself, it builds it with `fullfile(get_data_root(), ...)` rather than hardcoding it, so moving to a new machine only ever requires editing `local_config.m`.
+`get_behavior_root()` is flatter — `HabituationData.mat`, `DataRAM.mat`, `PostHoc.mat`, and `DataTmaze.mat` sit directly under that one folder.
+
+If a script needs a path other than the root itself, it builds it with `fullfile(get_data_root(), ...)` or `fullfile(get_behavior_root(), ...)` rather than hardcoding it, so moving to a new machine only ever requires editing `local_config.m`.
 
 ## Known issues / before you publish this
 

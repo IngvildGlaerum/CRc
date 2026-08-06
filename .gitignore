@@ -15,3 +15,6 @@ Thumbs.db
 
 # Machine-specific config (see local_config_template.m)
 local_config.m
+
+# Raw behavior data -- lives outside the repo, see get_behavior_root()
+BehaviorOnly/*.mat
