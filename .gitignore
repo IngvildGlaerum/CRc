@@ -18,3 +18,10 @@ local_config.m
 
 # Raw behavior data -- lives outside the repo, see get_behavior_root()
 BehaviorOnly/*.mat
+
+# Python / RLModel
+Data/
+Output/
+RLModel/.venv/
+__pycache__/
+*.py[cod]

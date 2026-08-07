@@ -1,0 +1,23 @@
+# Python dependencies for RLModel/
+#
+# IMPORTANT — replace the ">=" bounds below with the EXACT versions from the
+# environment that produced the published figures, e.g.:
+#
+#     pip freeze | grep -Ei '^(numpy|scipy|pandas|matplotlib|seaborn|numba|tqdm)=='
+#
+# Unpinned requirements are not reproducible. Two of these packages are
+# especially version-sensitive here:
+#   - seaborn : plot_box_with_sig() recolours boxes by iterating ax.patches,
+#               which has changed across seaborn/matplotlib releases.
+#   - numba   : must be compatible with the installed numpy ABI.
+#
+# Also required but not installable via pip: tkinter (system Tk), used by
+# rl_functions.set_plotting_params(). On Debian/Ubuntu: sudo apt install python3-tk
+
+numpy>=1.24
+scipy>=1.11
+pandas>=2.0
+matplotlib>=3.7
+seaborn>=0.13
+numba>=0.59
+tqdm>=4.66
