@@ -88,4 +88,3 @@ If a script needs a path other than the root itself, it builds it with `fullfile
 ## Known issues / before you publish this
 
 - **Upstream `.mat` files aren't included.** `CompileSpatialFeatures.mlx` produces `CompiledSpatialStats.mat`, which several other scripts load — but the pipeline that produces the *inputs* to `CompileSpatialFeatures.mlx` (`postprocessed.mat`, `Position_tuning.mat`, `behavior.mat`, etc.) lives outside this repo. Worth documenting the expected structure/fields of those files somewhere so the repo is usable without the full pipeline.
-- **Not everything from the original analysis is in here yet.** `Decoding2.mlx` (earlier, non-bootstrapped decoder), `Process_reward_zones.mlx`, `Process_behavior_only.mlx`, `StabilityQuantification.mlx`, `StabilityQuantificationOccCorrected.mlx`, and `TrialDynamics.mlx` are not currently included in this repo.
