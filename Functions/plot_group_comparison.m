@@ -1,4 +1,4 @@
-function plot_group_comparison(data, control, experimental, cell_numb, edges, colors, save_path_base,save_path, ylabel_text, x_label_text, save_tag)
+function plot_group_comparison(data, control, experimental, cell_numb, edges, colors, ylabel_text, x_label_text)
 % plot_group_comparison
 % Plots boxplot, scatter, and histogram comparisons between control and experimental groups
 %
@@ -9,10 +9,8 @@ function plot_group_comparison(data, control, experimental, cell_numb, edges, co
 %   cell_numb       - 1x2 vector with number of neurons in [control, experimental]
 %   edges           - Predefine the range for the histogram
 %   colors          - Cell array with color definitions {color_control, color_experimental}
-%   save_path_base  - Path to save the figures (e.g., 'E:\path\to\figures\')
 %   ylabel_text     - Label for y-axis (e.g., 'Spatial Information (bit/spike)')
 %   x_label_text    - Label for x-axis in histogram (e.g., same as ylabel_text)
-%   save_tag        - String tag used in filename (e.g., 'SI')
 
 % Flatten and clean control data
 data_cont = data(:,control);
@@ -42,9 +40,7 @@ scatter(1, data_all(:,1), 'filled', 'jitter','on','jitterAmount',0.08, 'MarkerFa
 scatter(2, data_all(:,2), 'filled', 'jitter','on','jitterAmount',0.08, 'MarkerFaceAlpha', 0.5);
 % s.MarkerEdgeAlpha = 0.7;
 ylabel(ylabel_text)
-print(gcf, '-dsvg', '-painters', fullfile(save_path,'Paper Prep',[save_tag '_box.svg']));
-% save_figure(fullfile(save_path_base, save_tag), [save_tag '_box']);
-fullfile(save_path_base,[save_tag '_box.svg'])
+
 % t-test
 [h,p] = ttest2(data_all_cont, data_all_exp);
 disp(['t-test p-value: ' num2str(p)])
@@ -55,5 +51,4 @@ hold on
 h2 = histogram(data_all_exp, edges, 'FaceAlpha', 0.7, 'FaceColor', colors{2});
 ylabel('# Neurons')
 xlabel(x_label_text)
-save_figure(fullfile(save_path_base, save_tag), [save_tag '_hist']);
 end

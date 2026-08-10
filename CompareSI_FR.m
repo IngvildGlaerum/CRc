@@ -39,27 +39,23 @@ end
 plot_across_days(days_fr_cont, days_fr_exp, colors,save_path);
 
 % Plot All Days
-save_si = fullfile(save_path,'SI/Comparison');
 label_text = 'Spatial Information (bit/spike)';
-save_tag = 'SI';
-edges = linspace(0,10.5,21); 
-plot_group_comparison(SI, control, experimental, cell_numb, edges, colors, save_si, save_path, label_text, label_text, save_tag);
+edges = linspace(0,10.5,21);
+plot_group_comparison(SI, control, experimental, cell_numb, edges, colors, label_text, label_text);
 
-save_tag = 'Sparsity';
 label_text = 'Sparsity';
 edges2 = linspace(0,1,20);
-plot_group_comparison(sparsity, control, experimental, cell_numb, edges2, colors, save_si, save_path, label_text, label_text, save_tag);
+plot_group_comparison(sparsity, control, experimental, cell_numb, edges2, colors, label_text, label_text);
 
-% save_tag = 'Spatial_info_rate';
 % label_text = 'Spatial info rate (bit/s)';
 % edges2 = linspace(0,8,20);
-% plot_group_comparison(si_rate, control, experimental, cell_numb, edges2, colors, save_si, save_path, label_text, label_text, save_tag);
+% plot_group_comparison(si_rate, control, experimental, cell_numb, edges2, colors, label_text, label_text);
 
 save_fr = fullfile(save_path,'FR/Comparison');
 label_text = 'Firing Rate (Hz)';
 save_tag = 'FR';
-edges = linspace(0,10.5,21); 
-plot_group_comparison(fr_avr, control, experimental, cell_numb, edges, colors, save_fr, save_path, label_text, label_text, save_tag);
+edges = linspace(0,10.5,21);
+plot_group_comparison(fr_avr, control, experimental, cell_numb, edges, colors, label_text, label_text);
 
 label_x = 'Firing Rate (Hz)';
 label_y = 'SI (bit/spike)';
