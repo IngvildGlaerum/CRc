@@ -53,7 +53,7 @@ CRc/
 │   ├── sigstar.m
 │   ├── shadedErrorBar.m           # vendored from raacampbell/shadedErrorBar — see file header
 │   ├── centroid.m                 # vendored from BNT/externals/geom2d — see file header
-│   └── average_matrix.m           # found in Ingvild's behavioral testing folder
+│   └── average_matrix.m          
 └── resources/project/             # MATLAB Project metadata (created by CRc.prj)
 ```
 
